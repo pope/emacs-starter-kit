@@ -1,0 +1,115 @@
+* INTRODUCTION
+
+  Rudel is a collaborative editing environment for GNU Emacs. Its
+  purpose is to share buffers with other users in order to edit the
+  contents of those buffers collaboratively. Rudel supports multiple
+  backends to enable communication with other collaborative editors
+  using different protocols, though currently Obby (for use with the
+  Gobby editor) is the only fully-functional one.
+
+  Since Rudel is not an application, but an extension to Emacs, it is
+  not started and used like most applications (not even Emacs
+  applications like Gnus). Rudel mostly works in the background to
+  change the behavior of the set of Emacs buffers for which it has
+  been activated.
+
+  The user interface consists of a set of key bindings, a menu entry
+  and some visual status indicators, which are added to the text,
+  header line and/or mode line of buffers for which Rudel has been
+  activated.
+
+* GETTING STARTED
+
+  Assuming Rudel has already been installed (see file:INSTALL) and
+  auto loading has been set up, a global Rudel mode can be enabled as
+  follows:
+
+  : M-x global-rudel-minor-mode
+
+  This will enable Rudel's key bindings and add a menu entry. To
+  enable this mode permanently, the following fragment can be added to
+  the Emacs initialization file (usually file:~/.emacs):
+
+  #+BEGIN_SRC emacs-lisp
+  (global-rudel-minor-mode 1)
+  #+END_SRC
+
+** JOINING A SESSION
+
+   : M-x rudel-join-session [ C-c c j ]
+
+   Depending on the installed Rudel backends, system environment and
+   configuration, a number of questions will be asked, followed by an
+   attempt to join session described by your answers.
+
+   A typical example of the questions asked when joining a session may
+   look like this:
+
+   #+BEGIN_EXAMPLE
+   Server: localhost RET
+   Port (default 6522): RET
+   Username: jan RET
+   Color: light sky blue RET
+   Use Encryption (y or n): n RET
+   Global Password: RET
+   User Password: RET
+   #+END_EXAMPLE
+
+   *IMPORTANT*: For sessions using the obby backend (like in the
+   example above), the following restriction has to be taken into
+   account:
+   + When the server is Rudel inside an Emacs process:
+     Encryption cannot be used currently in this case. Consequently
+     the answer to the `Use Encryption (y or n):' prompt above has to
+     be `n RET'.
+   + When the server is a Gobby process:
+     Gobby only supports encrypted connections. So the answer has to
+     be `y RET' is this case.
+
+   It is possible to configure frequently used sessions using the
+   customization options `rudel-configured-sessions'. When one or more
+   sessions are configured, `rudel-join-session' will provide choices
+   like "my-configured-session", ... and "ask-protocol". Selecting
+   "ask-protocol" invokes the behavior described above. Selecting one
+   of the configured sessions connects to that session without asking
+   for all the data.
+
+** HOSTING A SESSION
+
+   : M-x rudel-host-session [ C-c c h ]
+
+   Note that the session starts out without any participating users
+   (This is sometimes referred to as being a dedicated server). If you
+   want to participate in the session you host, you have to join it as
+   described above.
+
+* KNOWN ISSUES
+
+  + Publishing eshell buffers will cause your session to be
+    disconnected since eshell disables the hooks that Rudel uses to
+    catch changes to the buffer. As a workaround, you can use M-x
+    ansi-term or another terminal emulator.
+
+* LICENSE
+
+  This file is part of Rudel.
+
+  Rudel is free software: you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Rudel is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+  License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Rudel.  If not, see <http://www.gnu.org/licenses/>.
+
+#+STARTUP: showeverything
+#+TITLE:   Rudel README
+#+AUTHOR:  Jan Moringen
+Local variables:
+mode: org
+end:

@@ -1,0 +1,18 @@
+[submodule "vendor/auto-complete"]
+	path = vendor/auto-complete
+	url = http://github.com/m2ym/auto-complete.git
+[submodule "vendor/cheat"]
+	path = vendor/cheat
+	url = http://github.com/defunkt/cheat.el.git
+[submodule "vendor/color-theme-github"]
+	path = vendor/color-theme-github
+	url = http://github.com/dudleyf/color-theme-github.git
+[submodule "vendor/color-theme-ir-black"]
+	path = vendor/color-theme-ir-black
+	url = http://github.com/burke/color-theme-ir-black.git
+[submodule "vendor/textmate"]
+	path = vendor/textmate
+	url = git://github.com/defunkt/textmate.el.git
+[submodule "vendor/gist"]
+	path = vendor/gist
+	url = http://github.com/defunkt/gist.el.git

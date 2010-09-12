@@ -31,6 +31,7 @@
 (add-to-list 'load-path (concat vendor-dir "malabar/lisp"))
 (add-to-list 'load-path (concat vendor-dir "ecb"))
 (add-to-list 'load-path (concat vendor-dir "rudel"))
+(add-to-list 'load-path (concat vendor-dir "html5"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -126,3 +127,9 @@
       (rename-buffer new-name)
       (set-visited-file-name new-name)
       (set-buffer-modified-p nil))))))
+
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files
+                (concat vendor-dir "html5/schemas.xml")))
+
+(require 'whattf-dt)

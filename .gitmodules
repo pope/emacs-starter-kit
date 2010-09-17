@@ -16,3 +16,6 @@
 [submodule "vendor/gist"]
 	path = vendor/gist
 	url = http://github.com/defunkt/gist.el.git
+[submodule "vendor/mingus"]
+	path = vendor/mingus
+	url = http://github.com/pft/mingus.git

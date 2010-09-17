@@ -32,6 +32,7 @@
 (add-to-list 'load-path (concat vendor-dir "ecb"))
 (add-to-list 'load-path (concat vendor-dir "rudel"))
 (add-to-list 'load-path (concat vendor-dir "html5"))
+(add-to-list 'load-path (concat vendor-dir "mingus"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -53,6 +54,7 @@
 (viper-go-away)
 
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
+(autoload 'mingus "mingus-stays-home")
 
 (require 'multi-term)
 (setq multi-term-program "/bin/bash")

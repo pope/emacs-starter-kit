@@ -28,8 +28,6 @@
 (add-to-list 'load-path (concat vendor-dir "cheat"))
 (add-to-list 'load-path (concat vendor-dir "geben"))
 (add-to-list 'load-path (concat vendor-dir "auto-complete"))
-(add-to-list 'load-path (concat vendor-dir "malabar/lisp"))
-(add-to-list 'load-path (concat vendor-dir "ecb"))
 (add-to-list 'load-path (concat vendor-dir "rudel"))
 (add-to-list 'load-path (concat vendor-dir "html5"))
 (add-to-list 'load-path (concat vendor-dir "mingus"))
@@ -91,19 +89,8 @@
 (global-auto-revert-mode)
 (prefer-coding-system 'utf-8)
 
-(load-file (concat vendor-dir "cedet/common/cedet.el"))
-(semantic-load-enable-minimum-features)
-(semantic-load-enable-code-helpers)
-(global-ede-mode t)
-
-(require 'malabar-mode)
-(setq malabar-groovy-lib-dir (concat vendor-dir "malabar/lib"))
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-(add-hook 'malabar-mode-hook
-          '(lambda ()
-            (add-hook 'after-save-hook 'malabar-compile-file-silently
-                      nil t)))
-(require 'ecb)
+(autoload 'malabar-mode "malabar-load" "Start Up Malabar Mode" t)
 
 (load-file (concat vendor-dir "rudel/rudel-loaddefs.el"))
 (global-rudel-minor-mode)

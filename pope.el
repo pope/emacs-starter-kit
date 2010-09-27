@@ -31,6 +31,7 @@
 (add-to-list 'load-path (concat vendor-dir "rudel"))
 (add-to-list 'load-path (concat vendor-dir "html5"))
 (add-to-list 'load-path (concat vendor-dir "mingus"))
+(add-to-list 'load-path (concat vendor-dir "vc-p4"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -47,6 +48,7 @@
 (require 'quack)
 (require 'cheat)
 (require 'confluence)
+(require 'vc-p4)
 
 (require 'vimpulse)
 (viper-go-away)

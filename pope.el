@@ -52,9 +52,9 @@
 (viper-go-away)
 
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
-(autoload 'mingus "mingus-stays-home")
+(autoload 'mingus "mingus-stays-home" "Music Player Client on Emacs" t)
 
-(require 'multi-term)
+(autoload 'multi-term "multi-term" "Multi-Term" t)
 (setq multi-term-program "/bin/bash")
 
 (add-hook 'php-mode-hook '(lambda ()

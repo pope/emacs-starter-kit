@@ -72,7 +72,8 @@
 (defclass rudel-obby-server-state-new
   (rudel-obby-server-connection-state)
   ()
-  "State in which new connections start out.")
+  "State in which new connections start out."
+  :method-invocation-order :c3)
 
 (defmethod rudel-enter ((this rudel-obby-server-state-new))
   "Sends welcome messages to the client and starts the session
@@ -92,7 +93,8 @@ timeout timer."
 (defclass rudel-obby-server-state-encryption-negotiate
   (rudel-obby-server-connection-state)
   ()
-  "Encryption negotiation state.")
+  "Encryption negotiation state."
+  :method-invocation-order :c3)
 
 (defmethod rudel-enter ((this rudel-obby-server-state-encryption-negotiate))
   "Send net6 'encryption' message requesting to not enable encryption."
@@ -121,7 +123,8 @@ failed encryption negotiation."
 (defclass rudel-obby-server-state-before-join
   (rudel-obby-server-connection-state)
   ()
-  "Waiting for client request joining the session.")
+  "Waiting for client request joining the session."
+  :method-invocation-order :c3)
 
 (defmethod rudel-obby/net6_client_login
   ((this rudel-obby-server-state-before-join) username color
@@ -229,8 +232,9 @@ failed encryption negotiation."
 ;;
 
 (defclass rudel-obby-server-state-idle
-  (rudel-obby-server-connection-state)
-  ()
+  (rudel-obby-server-connection-state
+   rudel-obby-document-handler)
+  ((document-container-slot :initform 'server))
   "Idle state of a server connection.
 
 The connection enters this state when all setup work is finished,
@@ -238,7 +242,8 @@ the client has joined the session and no operation is in
 progress. In this state, the connection waits for new messages
 from the client that initiate operations. Simple (which means
 stateless in this case) operations are performed without leaving
-the idle state.")
+the idle state."
+  :method-invocation-order :c3)
 
 (defmethod rudel-obby/obby_user_colour
   ((this rudel-obby-server-state-idle) color-)
@@ -320,25 +325,6 @@ of her color to COLOR."
 	  ;; Add a jupiter context for (THIS DOCUMENT).
 	  (rudel-add-context server (oref this :connection) document))))
     nil)
-  )
-
-(defmethod rudel-obby/obby_document
-  ((this rudel-obby-server-state-idle) doc-id action &rest arguments)
-  "Handle obby 'document' messages."
-  (with-parsed-arguments ((doc-id document-id))
-    ;; Locate the document based on owner id and document id
-    (let ((document (with-slots (server) (oref this :connection)
-		      (rudel-find-document server doc-id
-					   #'equal #'rudel-both-ids))))
-      (if document
-	  (rudel-dispatch
-	   this "rudel-obby/obby_document/" action
-	   (append (list document) arguments))
-	;; Display a warning if we cannot find the document.
-	(display-warning
-	 '(rudel obby)
-	 (format "Could not find document: `%s'" doc-id)
-	 :warning))))
   )
 
 (defmethod rudel-obby/obby_document/subscribe
@@ -663,13 +649,13 @@ connections to this server.")
 		   "List of objects representing clients
 connected to the server.")
    (next-client-id :initarg  :next-client-id
-		   :type     integer
+		   :type     (integer 1)
 		   :initform 1
 		   :documentation
 		   "An id that will be assigned to the next
 client that connects to the server.")
    (next-user-id   :initarg  :next-user-id
-		   :type     integer
+		   :type     (integer 1)
 		   :initform 1
 		   :documentation
 		   "An id that will be assigned to the next user

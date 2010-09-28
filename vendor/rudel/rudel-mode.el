@@ -42,7 +42,7 @@
 ;;
 ;; 0.2 - Use define-minor-mode.
 ;;
-;; 0.1 - Initial revision.
+;; 0.1 - Initial version.
 
 
 ;;; Code:
@@ -52,6 +52,7 @@
 (require 'easymenu)
 
 (require 'rudel)
+(require 'rudel-util) ;; for `object-add-hook', `object-remove-hook'
 (require 'rudel-hooks)
 (require 'rudel-display)
 
@@ -521,12 +522,12 @@ line publish state mode; otherwise, turn it off."
     ;; Define sub keymap
     (define-key sub-map "j" #'rudel-join-session)
     (define-key sub-map "h" #'rudel-host-session)
-    (define-key sub-map "e" #'rudel-end-session)
+    (define-key sub-map "e" #'rudel-leave-session)
 
     (define-key sub-map "c" #'rudel-change-color)
 
     (define-key sub-map "p" #'rudel-publish-buffer)
-    (define-key sub-map "u" #'rudel-unpublish-buffer)
+    (define-key sub-map "u" #'rudel-unsubscribe-buffer)
     (define-key sub-map "s" #'rudel-subscribe)
 
     ;; Bind the sub keymap into map
@@ -540,7 +541,7 @@ line publish state mode; otherwise, turn it off."
     '("Rudel"
       [ "Join Session"             rudel-join-session
 	                           (not rudel-current-session) ]
-      [ "Leave Session"            rudel-end-session
+      [ "Leave Session"            rudel-leave-session
 	                           rudel-current-session ]
       "---"
       [ "Host a Session"           rudel-host-session
@@ -555,12 +556,14 @@ line publish state mode; otherwise, turn it off."
       [ "Publish current Buffer"   rudel-publish-buffer
 	                           (and rudel-current-session
 					(not (rudel-buffer-has-document-p))) ]
-      [ "Unpublish current Buffer" rudel-unpublish-buffer
+      [ "Unsubscribe from current Buffer" rudel-unsubscribe-buffer
 	                           (rudel-buffer-has-document-p) ]
       [ "Subscribe to Document"    rudel-subscribe
 	                           rudel-current-session ]
       "---"
       [ "Rudel Overview"           rudel-speedbar
+	                           t ]
+      [ "Show Backends"            rudel-backend-dump
 	                           t ]
       "---"
       ( "Options"

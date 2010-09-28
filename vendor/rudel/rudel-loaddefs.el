@@ -1,13 +1,27 @@
+(let* ((rudel-dir (file-name-directory (or #$
+					   load-file-name
+					   (buffer-file-name))))
+       (subdirs   (mapcar
+		   (lambda (subdir)
+		     (concat rudel-dir subdir))
+		   '("." "jupiter" "adopted" "socket" "tls" "xmpp" "telepathy" "obby" "infinote" "zeroconf"))))
+  ;; Adjust load path. We need to have all Rudel subdirectories on
+  ;; the load path.
+  (dolist (subdir subdirs)
+    (add-to-list 'load-path subdir)))
+
 (require 'eieio)
+(require 'cl)
+(require 'rudel-backend)
 
 ;;; rudel-loaddefs.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
 
-;;;### (autoloads (rudel-unpublish-buffer rudel-publish-buffer rudel-subscribe
-;;;;;;  rudel-change-color rudel-end-session rudel-host-session rudel-join-session)
-;;;;;;  "rudel" "rudel.el" (19579 42444))
+;;;### (autoloads (rudel-unsubscribe rudel-publish-buffer rudel-subscribe
+;;;;;;  rudel-change-color rudel-leave-session rudel-host-session
+;;;;;;  rudel-join-session) "rudel" "rudel.el" (19617 5216))
 ;;; Generated autoloads from rudel.el
 
 (autoload 'rudel-join-session "rudel" "\
@@ -34,8 +48,8 @@ will be prompted for.
 
 \(fn INFO)" t nil)
 
-(autoload 'rudel-end-session "rudel" "\
-End the current collaborative editing session.
+(autoload 'rudel-leave-session "rudel" "\
+Leave the current collaborative editing session.
 
 \(fn)" t nil)
 
@@ -57,16 +71,18 @@ If BUFFER is nil, the current buffer is used.
 
 \(fn &optional BUFFER)" t nil)
 
-(autoload 'rudel-unpublish-buffer "rudel" "\
-Deny peers access to BUFFER in a collaborative editing session.
-If BUFFER is nil, the current is used.
+(autoload 'rudel-unsubscribe "rudel" "\
+Detaches BUFFER from the collaborative editing session.
+The most recent version of the content will remain in the
+buffer but not be affected by future changes from other
+peers. If BUFFER is nil, the current is used.
 
 \(fn &optional BUFFER)" t nil)
 
 ;;;***
 
 ;;;### (autoloads (rudel-backend-get-factory rudel-backend-get rudel-backend-factory)
-;;;;;;  "rudel-backend" "rudel-backend.el" (19579 42444))
+;;;;;;  "rudel-backend" "rudel-backend.el" (19617 5216))
 ;;; Generated autoloads from rudel-backend.el
 
 (eieio-defclass-autoload 'rudel-backend-factory 'nil "rudel-backend" "Factory class that holds an object for each known backend\ncategory. Objects manage backend implementation for one backend\ncategory each.")
@@ -88,15 +104,8 @@ A shortcut for getting the factory object for CATEGORY.
 
 ;;;***
 
-;;;### (autoloads nil "rudel-compile" "rudel-compile.el" (19579 42444))
-;;; Generated autoloads from rudel-compile.el
-
-(let* ((rudel-dir (file-name-directory (or nil load-file-name (buffer-file-name)))) (subdirs (mapcar (lambda (subdir) (concat rudel-dir subdir)) '("." "jupiter" "adopted" "socket" "tls" "xmpp" "telepathy" "obby" "infinote" "zeroconf")))) (dolist (subdir subdirs) (add-to-list 'load-path subdir)))
-
-;;;***
-
 ;;;### (autoloads (rudel-infinote-backend) "rudel-infinote" "infinote/rudel-infinote.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from infinote/rudel-infinote.el
 
 (eieio-defclass-autoload 'rudel-infinote-backend '(rudel-protocol-backend) "rudel-infinote" "")
@@ -110,7 +119,7 @@ A shortcut for getting the factory object for CATEGORY.
 ;;;### (autoloads (global-rudel-minor-mode global-rudel-mode-line-publish-state-mode
 ;;;;;;  rudel-mode-line-publish-state-minor-mode global-rudel-header-subscriptions-mode
 ;;;;;;  rudel-header-subscriptions-minor-mode) "rudel-mode" "rudel-mode.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from rudel-mode.el
 
 (autoload 'rudel-header-subscriptions-minor-mode "rudel-mode" "\
@@ -204,7 +213,7 @@ otherwise, turn it off.
 ;;;***
 
 ;;;### (autoloads (rudel-obby-backend) "rudel-obby" "obby/rudel-obby.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from obby/rudel-obby.el
 
 (eieio-defclass-autoload 'rudel-obby-backend '(rudel-protocol-backend) "rudel-obby" "Main class of the Rudel obby backend. Creates obby client\nconnections and creates obby servers.")
@@ -217,7 +226,7 @@ otherwise, turn it off.
 
 ;;;### (autoloads (rudel-configured-sessions-backend rudel-ask-protocol-backend)
 ;;;;;;  "rudel-session-initiation" "rudel-session-initiation.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from rudel-session-initiation.el
 
 (eieio-defclass-autoload 'rudel-ask-protocol-backend '(rudel-session-initiation-backend) "rudel-session-initiation" "This fallback backend can \"discover\" sessions by letting the\nuser select a suitable backend and asking for connect information\nrequired by the chosen backend.")
@@ -231,7 +240,7 @@ otherwise, turn it off.
 ;;;***
 
 ;;;### (autoloads (rudel-tcp-backend) "rudel-socket" "socket/rudel-socket.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from socket/rudel-socket.el
 
 (eieio-defclass-autoload 'rudel-tcp-backend '(rudel-transport-backend) "rudel-socket" "TCP transport backend.\nThe transport backend is a factory for TCP transport objects.")
@@ -241,7 +250,7 @@ otherwise, turn it off.
 ;;;***
 
 ;;;### (autoloads (rudel-speedbar) "rudel-speedbar" "rudel-speedbar.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from rudel-speedbar.el
 
 (autoload 'rudel-speedbar "rudel-speedbar" "\
@@ -251,16 +260,18 @@ Show connected users and available documents of Rudel session in speedbar.
 
 ;;;***
 
-;;;### (autoloads nil "rudel-telepathy" "telepathy/rudel-telepathy.el"
-;;;;;;  (19579 42444))
+;;;### (autoloads (rudel-telepathy-backend) "rudel-telepathy" "telepathy/rudel-telepathy.el"
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from telepathy/rudel-telepathy.el
+
+(eieio-defclass-autoload 'rudel-telepathy-backend '(rudel-transport-backend) "rudel-telepathy" "Class rudel-telepathy-backend ")
 
 (rudel-add-backend (rudel-backend-get-factory 'transport) 'telepathy 'rudel-telepathy-backend)
 
 ;;;***
 
 ;;;### (autoloads (rudel-start-tls-backend) "rudel-tls" "tls/rudel-tls.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from tls/rudel-tls.el
 
 (eieio-defclass-autoload 'rudel-start-tls-backend '(rudel-transport-backend) "rudel-tls" "STARTTLS transport backend.\nThe transport backend is a factory for transport objects that\nsupport STARTTLS behavior.")
@@ -270,7 +281,7 @@ Show connected users and available documents of Rudel session in speedbar.
 ;;;***
 
 ;;;### (autoloads (rudel-xmpp-backend) "rudel-xmpp" "xmpp/rudel-xmpp.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from xmpp/rudel-xmpp.el
 
 (eieio-defclass-autoload 'rudel-xmpp-backend '(rudel-transport-backend) "rudel-xmpp" "Transport backend works by transporting XMPP messages through\nXMPP connections.")
@@ -280,7 +291,7 @@ Show connected users and available documents of Rudel session in speedbar.
 ;;;***
 
 ;;;### (autoloads nil "rudel-xmpp-tunnel" "xmpp/rudel-xmpp-tunnel.el"
-;;;;;;  (19579 42444))
+;;;;;;  (19617 5216))
 ;;; Generated autoloads from xmpp/rudel-xmpp-tunnel.el
 
 (rudel-add-backend (rudel-backend-get-factory 'transport) 'xmpp 'rudel-xmpp-tunnel-backend)
@@ -288,7 +299,7 @@ Show connected users and available documents of Rudel session in speedbar.
 ;;;***
 
 ;;;### (autoloads (rudel-zeroconf-backend rudel-zeroconf-register-service)
-;;;;;;  "rudel-zeroconf" "zeroconf/rudel-zeroconf.el" (19579 42444))
+;;;;;;  "rudel-zeroconf" "zeroconf/rudel-zeroconf.el" (19617 5216))
 ;;; Generated autoloads from zeroconf/rudel-zeroconf.el
 
 (autoload 'rudel-zeroconf-register-service "rudel-zeroconf" "\
@@ -320,14 +331,14 @@ service type TYPE.
 ;;;;;;  "jupiter/jupiter-operation.el" "jupiter/jupiter.el" "obby/rudel-obby-client.el"
 ;;;;;;  "obby/rudel-obby-debug.el" "obby/rudel-obby-display.el" "obby/rudel-obby-errors.el"
 ;;;;;;  "obby/rudel-obby-server.el" "obby/rudel-obby-state.el" "obby/rudel-obby-util.el"
-;;;;;;  "rudel-chat.el" "rudel-color.el" "rudel-compat.el" "rudel-debug.el"
-;;;;;;  "rudel-display.el" "rudel-errors.el" "rudel-hooks.el" "rudel-icons.el"
-;;;;;;  "rudel-interactive.el" "rudel-operations.el" "rudel-operators.el"
-;;;;;;  "rudel-overlay.el" "rudel-protocol.el" "rudel-state-machine.el"
-;;;;;;  "rudel-transport-util.el" "rudel-transport.el" "rudel-util.el"
-;;;;;;  "rudel-xml.el" "xmpp/rudel-xmpp-debug.el" "xmpp/rudel-xmpp-sasl.el"
-;;;;;;  "xmpp/rudel-xmpp-state.el" "xmpp/rudel-xmpp-tls.el" "xmpp/rudel-xmpp-util.el")
-;;;;;;  (19579 49751 691730))
+;;;;;;  "rudel-chat.el" "rudel-color.el" "rudel-compat.el" "rudel-compile.el"
+;;;;;;  "rudel-debug.el" "rudel-display.el" "rudel-errors.el" "rudel-hooks.el"
+;;;;;;  "rudel-icons.el" "rudel-interactive.el" "rudel-operations.el"
+;;;;;;  "rudel-operators.el" "rudel-overlay.el" "rudel-protocol.el"
+;;;;;;  "rudel-state-machine.el" "rudel-transport-util.el" "rudel-transport.el"
+;;;;;;  "rudel-util.el" "rudel-xml.el" "xmpp/rudel-xmpp-debug.el"
+;;;;;;  "xmpp/rudel-xmpp-sasl.el" "xmpp/rudel-xmpp-state.el" "xmpp/rudel-xmpp-tls.el"
+;;;;;;  "xmpp/rudel-xmpp-util.el") (19617 5477 754806))
 
 ;;;***
 

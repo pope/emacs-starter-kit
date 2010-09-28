@@ -50,7 +50,7 @@
 ;;
 
 (defcustom rudel-tls-client-program
-  "gnutls-cli"
+  (executable-find "gnutls-cli")
   "The gnutls client program to use for encrypted connections."
   :group 'rudel
   :type  'file)
@@ -256,16 +256,36 @@ support STARTTLS behavior.")
   (when (next-method-p)
     (call-next-method))
 
-  (oset this :version rudel-tls-version))
+  (oset this :version rudel-tls-version)
+
+  (unless rudel-tls-client-program
+    (error "Required program 'gnutls-cli' not available")))
+
+(defvar rudel-tls-ask-connect-info-host-history nil
+  "History of hosts read by TLS backend's `rudel-ask-connect-info'.")
+
+(defvar rudel-tls-ask-connect-info-port-last nil
+  "Last port read by TLS backend's `rudel-ask-connect-info'.")
 
 (defmethod rudel-ask-connect-info ((this rudel-start-tls-backend)
 				   &optional info)
   "Augment INFO by read a hostname and a port number."
   ;; Read server host and port.
   (let ((host (or (plist-get info :host)
-		  (read-string "Server: ")))
+		  (read-string
+		   (if (car rudel-tls-ask-connect-info-host-history)
+		       (format
+			"Server (default %s): "
+			(car rudel-tls-ask-connect-info-host-history))
+		     "Server: ")
+		   nil
+		   'rudel-tls-ask-connect-info-host-history)))
 	(port (or (plist-get info :port)
-		  (read-number "Port: "))))
+		  (setq
+		   rudel-tls-ask-connect-info-port-last
+		   (read-number
+		    "Port: "
+		    rudel-tls-ask-connect-info-port-last)))))
     (append (list :host host
 		  :port port)
 	    info)))

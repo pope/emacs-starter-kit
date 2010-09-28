@@ -259,8 +259,10 @@ WHICH is compared to the result of KEY using TEST."
 	       "The connection used for communication by this
 session.")
    (self       :initarg  :self
-	       :type     rudel-user-child
+	       :type     (or null rudel-user-child)
+	       :initform nil
 	       :reader   rudel-self
+	       :writer   rudel-set-self
 	       :documentation
 	       "Points into USERS to the user object representing
 the local user"))
@@ -286,10 +288,10 @@ client perspective.")
 
 (defmethod rudel-unsubscribed-documents ((this rudel-client-session))
   "Return documents in THIS to which the self user is not subscribed."
-  (unless (slot-boundp this :self)
-    (error "Cannot find unsubscribed documents unless slot self is bound"))
-
   (with-slots (documents self) this
+    (unless self
+      (error "Cannot find unsubscribed documents without self user"))
+
     (remove-if
      (lambda (document)
        (with-slots (subscribed) document
@@ -463,7 +465,7 @@ collaborative editing session can subscribe to."
       ;; Add a handler to the kill-buffer hook to unsubscribe from the
       ;; document when the buffer gets killed.
       (add-hook 'kill-buffer-hook
-		#'rudel-unpublish-buffer
+		#'rudel-unsubscribe
 		nil t)
 
       ;;
@@ -484,7 +486,7 @@ Do nothing, if THIS is not attached to any buffer."
       (with-current-buffer buffer
 	;; Remove our handler function from the kill-buffer hook.
 	(remove-hook 'kill-buffer-hook
-		     #'rudel-unpublish-buffer
+		     #'rudel-unsubscribe
 		     t)
 
 	;; Remove our handler function from the after-change hook.
@@ -850,8 +852,6 @@ will be prompted for."
   (let* ((session-name      (plist-get info :name))
 	 (transport-backend (cdr (plist-get info :transport-backend)))
 	 (protocol-backend  (cdr (plist-get info :protocol-backend)))
-
-	 ;; First, create the session object.
 	 (session           (rudel-client-session
 			     session-name
 			     :backend protocol-backend))
@@ -938,13 +938,13 @@ will be prompted for."
     session))
 
 ;;;###autoload
-(defun rudel-end-session ()
-  "End the current collaborative editing session."
+(defun rudel-leave-session ()
+  "Leave the current collaborative editing session."
   (interactive)
   (unless rudel-current-session
     (error "No active Rudel session"))
 
-  ;; Actually end the session.
+  ;; Close the connection.
   (rudel-end rudel-current-session)
   )
 
@@ -1040,15 +1040,17 @@ If BUFFER is nil, the current buffer is used."
       (rudel-add-document rudel-current-session document)
 
       (rudel-attach-to-buffer document buffer)
-      (object-add-to-list document :subscribed self)
+      (rudel-add-user document self)
 
       (rudel-publish connection document)))
   )
 
 ;;;###autoload
-(defun rudel-unpublish-buffer (&optional buffer)
-  "Deny peers access to BUFFER in a collaborative editing session.
-If BUFFER is nil, the current is used."
+(defun rudel-unsubscribe (&optional buffer)
+  "Detaches BUFFER from the collaborative editing session.
+The most recent version of the content will remain in the
+buffer but not be affected by future changes from other
+peers. If BUFFER is nil, the current is used."
   (interactive)
 
   ;; Make sure we have a session.

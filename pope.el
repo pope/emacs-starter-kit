@@ -94,8 +94,7 @@
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 (autoload 'malabar-mode "malabar-load" "Start Up Malabar Mode" t)
 
-(load-file (concat vendor-dir "rudel/rudel-loaddefs.el"))
-(global-rudel-minor-mode)
+(autoload 'global-rudel-minor-mode "rudel-loaddefs" "Rudel - Code Collaborator" t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

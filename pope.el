@@ -34,6 +34,7 @@
 (add-to-list 'load-path (concat vendor-dir "vc-p4"))
 (add-to-list 'load-path (concat vendor-dir "apel"))
 (add-to-list 'load-path (concat vendor-dir "elscreen"))
+(add-to-list 'load-path (concat vendor-dir "jabber"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))

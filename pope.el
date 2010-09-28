@@ -32,6 +32,8 @@
 (add-to-list 'load-path (concat vendor-dir "html5"))
 (add-to-list 'load-path (concat vendor-dir "mingus"))
 (add-to-list 'load-path (concat vendor-dir "vc-p4"))
+(add-to-list 'load-path (concat vendor-dir "apel"))
+(add-to-list 'load-path (concat vendor-dir "elscreen"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -58,6 +60,8 @@
 
 (autoload 'multi-term "multi-term" "Multi-Term" t)
 (setq multi-term-program "/bin/bash")
+
+(load "elscreen" "ElScreen")
 
 (add-hook 'php-mode-hook '(lambda ()
   (setq c-basic-offset 4) ; 4 tabs indenting
@@ -101,28 +105,6 @@
 (menu-bar-mode t)
 ;;(tool-bar-mode t)
 ;;(scroll-bar-mode t)
-
-(require 'tabbar)
-(set-face-attribute
- 'tabbar-default-face nil
- :background "gray60")
-(set-face-attribute
- 'tabbar-unselected-face nil
- :background "gray85"
- :foreground "gray30"
- :box nil)
-(set-face-attribute
- 'tabbar-selected-face nil
- :background "#f2f2f6"
- :foreground "black"
- :box nil)
-(set-face-attribute
- 'tabbar-button-face nil
- :box '(:line-width 1 :color "gray72" :style released-button))
-(set-face-attribute
- 'tabbar-separator-face nil
- :height 0.7)
-(tabbar-mode 1)
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)

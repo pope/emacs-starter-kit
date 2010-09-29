@@ -19,3 +19,6 @@
 [submodule "vendor/mingus"]
 	path = vendor/mingus
 	url = http://github.com/pft/mingus.git
+[submodule "vendor/perspective"]
+	path = vendor/perspective
+	url = git://github.com/nex3/perspective-el.git

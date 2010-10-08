@@ -22,3 +22,6 @@
 [submodule "vendor/perspective"]
 	path = vendor/perspective
 	url = git://github.com/nex3/perspective-el.git
+[submodule "vendor/color-theme-mac-classic"]
+	path = vendor/color-theme-mac-classic
+	url = git://github.com/jbw/color-theme-mac-classic.git

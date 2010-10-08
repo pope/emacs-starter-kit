@@ -89,9 +89,10 @@
 ;; Activate theme
 (load (concat vendor-dir "color-theme-ir-black/color-theme-ir-black.el"))
 (load (concat vendor-dir "color-theme-github/color-theme-github.el"))
+(load (concat vendor-dir "color-theme-mac-classic/color-theme-mac-classic.el"))
 
-(color-theme-github)
-(set-mouse-color "black")
+;;(color-theme-github)
+;;(set-mouse-color "black")
 
 (delete-selection-mode t)
 (global-auto-revert-mode)

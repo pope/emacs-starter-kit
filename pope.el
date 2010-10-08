@@ -20,6 +20,7 @@
                        "/sbin" ":"
                        "/usr/X11/bin"))
 (setenv "MAVEN_OPTS" "-Xms512m -Xmx1024m")
+(setenv "P4CONFIG" ".p4settings")
 
 (add-to-list 'load-path vendor-dir)
 (add-to-list 'load-path (concat vendor-dir "textmate"))

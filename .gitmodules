@@ -25,3 +25,6 @@
 [submodule "vendor/color-theme-mac-classic"]
 	path = vendor/color-theme-mac-classic
 	url = git://github.com/jbw/color-theme-mac-classic.git
+[submodule "vendor/color-theme-tangotango"]
+	path = vendor/color-theme-tangotango
+	url = git://github.com/juba/color-theme-tangotango.git

@@ -90,6 +90,7 @@
 (load (concat vendor-dir "color-theme-ir-black/color-theme-ir-black.el"))
 (load (concat vendor-dir "color-theme-github/color-theme-github.el"))
 (load (concat vendor-dir "color-theme-mac-classic/color-theme-mac-classic.el"))
+(load (concat vendor-dir "color-theme-tangotango/color-theme-tangotango.el"))
 
 ;;(color-theme-github)
 ;;(set-mouse-color "black")

@@ -50,7 +50,6 @@
 (require 'sr-speedbar)
 (require 'quack)
 (require 'cheat)
-(require 'confluence)
 (require 'vc-p4)
 
 (require 'vimpulse)

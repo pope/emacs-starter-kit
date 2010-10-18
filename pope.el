@@ -34,7 +34,6 @@
 (add-to-list 'load-path (concat vendor-dir "mingus"))
 (add-to-list 'load-path (concat vendor-dir "vc-p4"))
 (add-to-list 'load-path (concat vendor-dir "apel"))
-(add-to-list 'load-path (concat vendor-dir "elscreen"))
 (add-to-list 'load-path (concat vendor-dir "jabber"))
 
 (require 'auto-complete)
@@ -62,8 +61,6 @@
 
 (autoload 'multi-term "multi-term" "Multi-Term" t)
 (setq multi-term-program "/bin/bash")
-
-(load "elscreen" "ElScreen")
 
 (add-hook 'php-mode-hook '(lambda ()
   (setq c-basic-offset 4) ; 4 tabs indenting

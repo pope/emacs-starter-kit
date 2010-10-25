@@ -129,3 +129,35 @@
                 (concat vendor-dir "html5/schemas.xml")))
 
 (require 'whattf-dt)
+
+(require 'tabbar)
+(set-face-attribute
+ 'tabbar-default-face nil
+ :background "gray60")
+(set-face-attribute
+ 'tabbar-unselected-face nil
+ :background "gray85"
+ :foreground "gray30"
+ :box nil)
+(set-face-attribute
+ 'tabbar-selected-face nil
+ :background "#f2f2f6"
+ :foreground "black"
+ :box nil)
+(set-face-attribute
+ 'tabbar-button-face nil
+ :box '(:line-width 1 :color "gray72" :style released-button))
+(set-face-attribute
+ 'tabbar-separator-face nil
+ :height 0.7)
+
+(tabbar-mode 1)
+
+;;Keys
+
+(global-set-key (kbd "s-{") 'tabbar-backward)
+(global-set-key (kbd "s-}") 'tabbar-forward)
+(global-set-key (kbd "s-[") 'tabbar-forward-group)
+(global-set-key (kbd "s-]") 'tabbar-backward-group)
+(global-set-key (kbd "s-w") 'kill-this-buffer)
+(global-set-key (kbd "s-k") 'kill-this-buffer)

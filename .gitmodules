@@ -28,3 +28,6 @@
 [submodule "vendor/color-theme-tangotango"]
 	path = vendor/color-theme-tangotango
 	url = git://github.com/juba/color-theme-tangotango.git
+[submodule "vendor/eproject"]
+	path = vendor/eproject
+	url = git://github.com/jrockway/eproject.git

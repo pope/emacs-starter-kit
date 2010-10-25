@@ -171,7 +171,9 @@ Return only one group for each buffer."
                    gnus-summary-mode message-mode gnus-group-mode
                    gnus-article-mode score-mode gnus-browse-killed-mode))
            '("Mail"))
-          ((ignore-errors (eproject-root)) (list (eproject-root)))
+          ((ignore-errors (eproject-root)) (list
+                                            (file-name-nondirectory
+                                             (directory-file-name (eproject-root)))))
           (t (list
               (if (and (stringp mode-name) (string-match "[^ ]" mode-name))
                   mode-name

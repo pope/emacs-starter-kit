@@ -127,6 +127,12 @@
       (set-visited-file-name new-name)
       (set-buffer-modified-p nil))))))
 
+(defun eshell/clear ()
+  "04Dec2001 - sailor, to clear the eshell buffer."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
+
 (eval-after-load "rng-loc"
   '(add-to-list 'rng-schema-locating-files
                 (concat vendor-dir "html5/schemas.xml")))

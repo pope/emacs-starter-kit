@@ -49,9 +49,13 @@ Return only one group for each buffer."
                    gnus-summary-mode message-mode gnus-group-mode
                    gnus-article-mode score-mode gnus-browse-killed-mode))
            '("Mail"))
-          ((ignore-errors (eproject-root)) (list
-                                            (file-name-nondirectory
-                                             (directory-file-name (eproject-root)))))
+          ((ignore-errors (eproject-root))
+           (list
+            ;; store it in the eproject group
+            (file-name-nondirectory (directory-file-name (eproject-root)))
+            ;; store it with other major modes
+            (if (and (stringp mode-name) (string-match "[^ ]" mode-name))
+                mode-name (symbol-name major-mode))))
           (t (list
               (if (and (stringp mode-name) (string-match "[^ ]" mode-name))
                   mode-name

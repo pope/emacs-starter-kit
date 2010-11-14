@@ -142,6 +142,18 @@
 (autoload 'pope-setup-tabbar "tabbar-load" "Start Up Tabbar" t)
 (unless (featurep 'aquamacs) (pope-setup-tabbar))
 
+(defun toggle-fullscreen (&optional f)
+  "Toggles a fullscreen view of the frame"
+  (interactive)
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+    (set-frame-parameter nil 'fullscreen
+                         (if (equal 'fullboth current-value)
+                             (if (boundp 'old-fullscreen) old-fullscreen nil)
+                           (progn (setq old-fullscreen current-value)
+                                  'fullboth)))))
+
 ;;Keys
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 (global-set-key (kbd "s-k") 'kill-this-buffer)
+(global-set-key [f11] 'toggle-fullscreen)
+(global-set-key (kbd "s-F") 'toggle-fullscreen)

@@ -1,3 +1,5 @@
+(defvar *emacs-load-start* (current-time))
+
 (setq ns-pop-up-frames nil
       ring-bell-function 'ignore
       vendor-dir (concat dotfiles-dir "vendor/")
@@ -8,6 +10,10 @@
       scroll-step 1)
 (line-number-mode t)
 (column-number-mode t)
+(winner-mode t)
+(delete-selection-mode t)
+(global-auto-revert-mode)
+(prefer-coding-system 'utf-8)
 
 (setenv "PATH" (concat "/usr/local/zend/bin" ":"
                        "/Users/pope/.gem/ruby/1.8/bin" ":"
@@ -36,6 +42,10 @@
 (add-to-list 'load-path (concat vendor-dir "apel"))
 (add-to-list 'load-path (concat vendor-dir "jabber"))
 (add-to-list 'load-path (concat vendor-dir "eproject"))
+(add-to-list 'load-path (concat vendor-dir "color-theme-ir-black"))
+(add-to-list 'load-path (concat vendor-dir "color-theme-github"))
+(add-to-list 'load-path (concat vendor-dir "color-theme-mac-classic"))
+(add-to-list 'load-path (concat vendor-dir "color-theme-tangotango"))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -44,27 +54,23 @@
 
 (require 'textmate)
 (require 'peepopen)
-(require 'color-theme)
-(require 'php-mode)
-(require 'php-electric)
-(require 'gist)
-(require 'sr-speedbar)
-(require 'quack)
-(require 'cheat)
+(autoload 'sr-speedbar "sr-speedbar" "Same frame speedbar" t)
+(autoload 'quack-load "quack-load" "Initialize Quack" t)
 (require 'vc-p4)
 (require 'eproject)
 (require 'eproject-extras)
 
-(require 'vimpulse)
-(viper-go-away)
+;;(require 'vimpulse)
+;;(viper-go-away)
 
-(autoload 'geben "geben" "PHP Debugger on Emacs" t)
 (autoload 'mingus "mingus-stays-home" "Music Player Client on Emacs" t)
 
 (autoload 'multi-term "multi-term" "Multi-Term" t)
 (setq multi-term-program "/bin/bash")
 
-(add-hook 'php-mode-hook '(lambda ()
+;; PHP Stuff
+
+(defun php-mode-settings ()
   (setq c-basic-offset 4) ; 4 tabs indenting
   (setq indent-tabs-mode nil)
   (setq fill-column 78)
@@ -73,33 +79,50 @@
   (c-set-offset 'arglist-close 'c-lineup-arglist-operators)
   (c-set-offset 'arglist-intro '+) ; for FAPI arrays and DBTNG
   (c-set-offset 'arglist-cont-nonempty 'c-lineup-math)
-  (setq php-mode-force-pear t))) ; for DBTNG fields and values
+  (setq php-mode-force-pear t)) ; for DBTNG fields and values
+
+(eval-after-load "php-mode"
+  '(progn
+     (require 'php-electric)
+     (add-hook 'php-mode-hook 'php-mode-settings)))
+
+(autoload 'php-mode "php-mode" "PHP Mode" t)
+(add-to-list 'auto-mode-alist '("\\.php[s34]?\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.inc\\'" . php-mode))
+
+(autoload 'geben "geben" "PHP Debugger on Emacs" t)
 
 ;; nxml-mode
 (setq nxml-slash-auto-complete-flag t)
 
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files
+                (concat vendor-dir "html5/schemas.xml")))
+
+(add-hook 'nxml-mode-hook '(lambda () (require 'whattf-dt)))
+
+;; textmate-mode
 (textmate-mode)
 (add-to-list '*textmate-project-roots* "pom.xml")
 (setq *textmate-gf-exclude* (concat *textmate-gf-exclude* "|target"))
 
 ;; Initalize theme
-(color-theme-initialize)
+(require 'color-theme)
+;;(color-theme-initialize)
+
+(setq color-theme-is-global nil)
 
 ;; Activate theme
-(load (concat vendor-dir "color-theme-ir-black/color-theme-ir-black.el"))
-(load (concat vendor-dir "color-theme-github/color-theme-github.el"))
-(load (concat vendor-dir "color-theme-mac-classic/color-theme-mac-classic.el"))
-(load (concat vendor-dir "color-theme-tangotango/color-theme-tangotango.el"))
-(load (concat vendor-dir "color-theme-dark-emacs.el"))
-(load (concat vendor-dir "color-theme-wombat.el"))
+(autoload 'color-theme-ir-black "color-theme-ir-black" "IR Black Color Theme" t)
+(autoload 'color-theme-github "color-theme-github" "Github Color Theme" t)
+(autoload 'color-theme-mac-classic "color-theme-mac-classic" "Mac Classic Color Theme" t)
+(autoload 'color-theme-tangotango "color-theme-tangotango" "TangoTango Color Theme" t)
+(autoload 'color-theme-dark-emacs "color-theme-dark-emacs" "Dark Emacs Color Theme" t)
+(autoload 'color-theme-wombat "color-theme-wombat" "Wombat Color Theme" t)
 
-;;(color-theme-github)
-;;(set-mouse-color "black")
 
-(delete-selection-mode t)
-(global-auto-revert-mode)
-(prefer-coding-system 'utf-8)
-
+;; Java
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 (autoload 'malabar-mode "malabar-load" "Start Up Malabar Mode" t)
 
@@ -133,15 +156,6 @@
   (let ((inhibit-read-only t))
     (erase-buffer)))
 
-(eval-after-load "rng-loc"
-  '(add-to-list 'rng-schema-locating-files
-                (concat vendor-dir "html5/schemas.xml")))
-
-(require 'whattf-dt)
-
-(autoload 'pope-setup-tabbar "tabbar-load" "Start Up Tabbar" t)
-(unless (featurep 'aquamacs) (pope-setup-tabbar))
-
 (defun toggle-fullscreen (&optional f)
   "Toggles a fullscreen view of the frame"
   (interactive)
@@ -152,8 +166,16 @@
                            (progn (setq old-fullscreen current-value)
                                   'fullboth)))))
 
+(autoload 'pope-setup-tabbar "tabbar-load" "Start Up Tabbar" t)
+(unless (featurep 'aquamacs) (pope-setup-tabbar))
+
 ;;Keys
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 (global-set-key [f11] 'toggle-fullscreen)
 (global-set-key (kbd "s-F") 'toggle-fullscreen)
+
+(message "My .emacs loaded in %ds" (destructuring-bind (hi lo ms)
+                                       (current-time)
+                                     (- (+ hi lo) (+ (first *emacs-load-start*)
+                                                     (second *emacs-load-start*)))))

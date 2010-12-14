@@ -29,23 +29,12 @@
 (setenv "P4CONFIG" ".p4settings")
 
 (add-to-list 'load-path vendor-dir)
-(add-to-list 'load-path (concat vendor-dir "textmate"))
-(add-to-list 'load-path (concat vendor-dir "color-theme"))
-(add-to-list 'load-path (concat vendor-dir "gist"))
-(add-to-list 'load-path (concat vendor-dir "cheat"))
-(add-to-list 'load-path (concat vendor-dir "geben"))
-(add-to-list 'load-path (concat vendor-dir "auto-complete"))
-(add-to-list 'load-path (concat vendor-dir "rudel"))
-(add-to-list 'load-path (concat vendor-dir "html5"))
-(add-to-list 'load-path (concat vendor-dir "mingus"))
-(add-to-list 'load-path (concat vendor-dir "vc-p4"))
-(add-to-list 'load-path (concat vendor-dir "apel"))
-(add-to-list 'load-path (concat vendor-dir "jabber"))
-(add-to-list 'load-path (concat vendor-dir "eproject"))
-(add-to-list 'load-path (concat vendor-dir "color-theme-ir-black"))
-(add-to-list 'load-path (concat vendor-dir "color-theme-github"))
-(add-to-list 'load-path (concat vendor-dir "color-theme-mac-classic"))
-(add-to-list 'load-path (concat vendor-dir "color-theme-tangotango"))
+
+(loop for ext in '("textmate" "color-theme" "cheat" "geben" "auto-complete"
+                   "rudel" "html5" "mingus" "vc-p4" "apel" "jabber" "eproject"
+                   "color-theme-ir-black" "color-theme-github"
+                   "color-theme-mac-classic" "color-theme-tangotango")
+      do (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))

@@ -52,6 +52,7 @@
 (require 'eproject)
 (require 'eproject-extras)
 (require 'ecb-autoloads)
+(require 'zf)
 
 (load (concat vendor-dir "nxhtml/autostart.el"))
 

@@ -16,15 +16,19 @@
 
 (defun zf-goto-alt ()
   (interactive)
-  (let* ((fn-line (save-excursion
-                    (save-restriction
-                      (narrow-to-defun)
-                      (goto-char (point-min))
-                      (move-end-of-line 1)
-                      (buffer-substring (point-min)(point)))))
-         (fn-name (if (string-match "defun \\(.*?\\) ()" fn-line)
-                      (substring fn-line (match-beginning 1) (match-end 1)))))
-    (message fn-name)))
+  (let ((bname (replace-regexp-in-string "^\\(.*?\\)/controllers/.*$" "\\1" (buffer-file-name)))
+        (cname (zf/camel-to-hyphens
+                (replace-regexp-in-string "^.*/\\(.*\\)Controller\\.php$" "\\1"
+                                          (buffer-file-name))))
+        (sname (zf/camel-to-hyphens
+                (save-excursion
+                  (save-restriction
+                    (narrow-to-defun)
+                    (goto-char (point-min))
+                    (replace-regexp-in-string "^.*function \\(.*\\)Action.*\n"
+                                              "\\1"
+                                              (thing-at-point 'line) t nil))))))
+    (zf/goto-file (concat bname "/views/scripts/" cname "/" sname ".phtml"))))
 
 ;; HELPERS
 
@@ -40,8 +44,11 @@
 (defun zf/camel-to-hyphens (str)
   (let ((cfs case-fold-search))
     (setq case-fold-search nil)
-    (let ((result (downcase
-                   (replace-regexp-in-string "[A-Z]" "-\\&" str))))
+    (let* ((fp (substring str 0 1))
+           (lp (substring str 1))
+           (result (concat (downcase fp)
+                           (downcase
+                            (replace-regexp-in-string "[A-Z]" "-\\&" lp)))))
       (setq case-fold-search cfs)
       result)))
 

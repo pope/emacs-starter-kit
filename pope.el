@@ -7,7 +7,8 @@
       c-basic-offset 4
       nxml-child-indent 4
       tab-width 4
-      scroll-step 1)
+      scroll-step 1
+      mumamo-background-colors nil)
 (line-number-mode t)
 (column-number-mode t)
 (winner-mode t)
@@ -51,6 +52,8 @@
 (require 'eproject)
 (require 'eproject-extras)
 (require 'ecb-autoloads)
+
+(load (concat vendor-dir "nxhtml/autostart.el"))
 
 ;;(require 'vimpulse)
 ;;(viper-go-away)

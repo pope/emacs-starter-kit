@@ -28,11 +28,13 @@
 (setenv "MAVEN_OPTS" "-Xms512m -Xmx1024m")
 (setenv "P4CONFIG" ".p4settings")
 
+(load-file (concat vendor-dir "/cedet/common/cedet.el"))
+
 (add-to-list 'load-path vendor-dir)
 
 (loop for ext in '("textmate" "color-theme" "cheat" "geben" "auto-complete"
                    "rudel" "html5" "mingus" "vc-p4" "apel" "jabber" "eproject"
-                   "color-theme-ir-black" "color-theme-github"
+                   "ecb" "color-theme-ir-black" "color-theme-github"
                    "color-theme-mac-classic" "color-theme-tangotango")
       do (add-to-list 'load-path (concat vendor-dir ext)))
 
@@ -48,6 +50,7 @@
 (require 'vc-p4)
 (require 'eproject)
 (require 'eproject-extras)
+(require 'ecb-autoloads)
 
 ;;(require 'vimpulse)
 ;;(viper-go-away)

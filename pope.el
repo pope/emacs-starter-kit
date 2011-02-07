@@ -14,6 +14,8 @@
 (winner-mode t)
 (delete-selection-mode t)
 (global-auto-revert-mode)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
 (setenv "PATH" (concat "/usr/local/zend/bin" ":"

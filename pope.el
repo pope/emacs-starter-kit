@@ -55,6 +55,7 @@
 (require 'eproject-extras)
 (require 'ecb-autoloads)
 (require 'zf)
+(require 'php-flymake)
 
 (load (concat vendor-dir "nxhtml/autostart.el"))
 
@@ -83,11 +84,6 @@
   '(progn
      (require 'php-electric)
      (add-hook 'php-mode-hook 'php-mode-settings)))
-
-(autoload 'php-mode "php-mode" "PHP Mode" t)
-(add-to-list 'auto-mode-alist '("\\.php[s34]?\\'" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.inc\\'" . php-mode))
 
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
 

@@ -1,3 +1,27 @@
+(require 'eproject)
+
+(define-minor-mode zf-mode
+  "A minor mode for when you're working with a ZendFramework project."
+  :lighter " zf"
+  :group zf
+  :keymap
+  `(
+    (,(kbd "C-c z a")     . zf-goto-alt)
+    (,(kbd "C-c z t")     . zf-goto-test)
+    (,(kbd "C-c C-z t")   . zf-testfile-via-ant)
+    (,(kbd "C-c C-z S-t") . zf-test-via-ant)
+    ))
+
+(defun turn-on-zf ()
+  "Turn on zf-mode"
+  (interactive)
+  (if (not zf-mode) (zf-mode)))
+
+(defun turn-off-zf ()
+  "Turn off zf-mode"
+  (interactive)
+  (if zf-mode (zf-mode)))
+
 ;; COMMANDS
 
 (defun zf-goto-test ()
@@ -47,6 +71,21 @@
                    (re-search-forward vname)))))
           (t
            nil))))
+
+(defun zf-testfile-via-ant ()
+  (interactive)
+  (let ((default-directory (eproject-root))
+        (phpunit-cmd "ant phpunit-one -Dtest="))
+    (save-match-data
+      (cond ((string-match "Test\\.php$" (buffer-file-name))
+             (compile (concat phpunit-cmd (buffer-file-name))))
+            (t
+             (message "There is not test file to run"))))))
+
+(defun zf-test-via-ant ()
+  (interactive)
+  (let ((default-directory (eproject-root)))
+    (compile "ant phpunit")))
 
 ;; HELPERS
 

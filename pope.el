@@ -54,8 +54,8 @@
 (require 'eproject)
 (require 'eproject-extras)
 (require 'ecb-autoloads)
-(require 'zf)
-(require 'php-flymake)
+(autoload 'turn-on-zf "zf" "Turn on zf-mode" t)
+(autoload 'zf-mode "zf" "A minor mode for when you're working with a ZendFramework project." t)
 
 (load (concat vendor-dir "nxhtml/autostart.el"))
 
@@ -83,7 +83,9 @@
 (eval-after-load "php-mode"
   '(progn
      (require 'php-electric)
-     (add-hook 'php-mode-hook 'php-mode-settings)))
+     (require 'php-flymake)
+     (add-hook 'php-mode-hook 'php-mode-settings)
+     (add-hook 'php-mode-hook 'turn-on-zf)))
 
 (autoload 'geben "geben" "PHP Debugger on Emacs" t)
 

@@ -109,7 +109,7 @@
 (require 'color-theme)
 ;;(color-theme-initialize)
 
-(setq color-theme-is-global nil)
+(setq color-theme-is-global t)
 
 ;; Activate theme
 (autoload 'color-theme-ir-black "color-theme-ir-black" "IR Black Color Theme" t)

@@ -119,9 +119,7 @@
 (autoload 'color-theme-dark-emacs "color-theme-dark-emacs" "Dark Emacs Color Theme" t)
 (autoload 'color-theme-wombat "color-theme-wombat" "Wombat Color Theme" t)
 
-
 ;; Java
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 (autoload 'malabar-mode "malabar-load" "Start Up Malabar Mode" t)
 
 (autoload 'global-rudel-minor-mode "rudel-loaddefs" "Rudel - Code Collaborator" t)

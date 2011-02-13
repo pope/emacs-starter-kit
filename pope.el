@@ -30,6 +30,7 @@
                        "/usr/X11/bin"))
 (setenv "MAVEN_OPTS" "-Xms512m -Xmx1024m")
 (setenv "P4CONFIG" ".p4settings")
+(setenv "XDEBUG_CONFIG" "idekey=geben_session")
 
 (load-file (concat vendor-dir "/cedet/common/cedet.el"))
 
@@ -126,6 +127,7 @@
 (autoload 'global-rudel-minor-mode "rudel-loaddefs" "Rudel - Code Collaborator" t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 
 (menu-bar-mode t)
 ;;(tool-bar-mode t)

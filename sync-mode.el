@@ -34,6 +34,7 @@
 ;; ** TODO Allow the project root to be specified and not rely on eproject
 ;; ** TODO only use the project root if the syncing to and syncing from are relative paths
 ;; ** TODO see about using `tramp' to provide non-local syncing
+;; ** TODO only sync a file if it's inside of the sync-from directory
 
 (require 'eproject)
 
@@ -63,7 +64,6 @@
 (defun sync ()
   "Sync a buffer from one directory to another."
   (interactive)
-  (message (eproject-root))
   (if (and sync-from
            sync-to
            (string-prefix-p (eproject-root) (buffer-file-name)))
@@ -79,6 +79,15 @@
                    t))
     (message "I don't know where to sync this file to!"))
   nil)
+
+;; Mumamo Support
+
+(eval-after-load "mumamo"
+  '(progn
+     (put 'sync-mode 'permanent-local-hook t)
+     (put 'sync-mode 'permanent-local t)
+     (put 'sync-to 'permanent-local t)
+     (put 'sync-from 'permanent-local t)))
 
 (provide sync-mode)
 

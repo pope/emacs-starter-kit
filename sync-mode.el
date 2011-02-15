@@ -54,12 +54,12 @@
 (defun turn-on-sync ()
   "Turn on sync-mode"
   (interactive)
-  (if (not sync-mode) (sync-mode)))
+  (sync-mode t))
 
 (defun turn-off-sync ()
   "Turn off sync-mode"
   (interactive)
-  (if sync-mode (sync-mode)))
+  (sync-mode nil))
 
 (defun sync ()
   "Sync a buffer from one directory to another."
@@ -85,6 +85,7 @@
 (eval-after-load "mumamo"
   '(progn
      (put 'sync-mode 'permanent-local-hook t)
+     (put 'sync 'permanent-local-hook t)
      (put 'sync-mode 'permanent-local t)
      (put 'sync-to 'permanent-local t)
      (put 'sync-from 'permanent-local t)))

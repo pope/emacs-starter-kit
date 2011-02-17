@@ -46,3 +46,6 @@
 [submodule "vendor/nxhtml"]
 	path = vendor/nxhtml
 	url = https://github.com/emacsmirror/nxhtml.git
+[submodule "vendor/naquadah-theme"]
+	path = vendor/naquadah-theme
+	url = git://git.naquadah.org/naquadah-theme.git

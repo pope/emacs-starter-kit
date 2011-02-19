@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2002, 2003 Vladimir G. Sekissov
 
-;; Author: K. Adam Christensen <pope@Lain-the-MacBook.local>
-;; Created: 2011-02-02 13:23:38-0500
+;; Author: Eric M. Ludlam <zappo@projectile.siege-engine.com>
+;; Created: 2010-08-22 20:55:25-0400
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 

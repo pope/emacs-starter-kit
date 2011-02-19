@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2002, 2003, 2009 David Ponce
 
-;; Author: K. Adam Christensen <pope@Lain-the-MacBook.local>
-;; Created: 2011-02-02 13:23:26-0500
+;; Author: Eric M. Ludlam <zappo@projectile.siege-engine.com>
+;; Created: 2010-08-22 20:55:17-0400
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 

@@ -34,3 +34,6 @@
 [submodule "vendor/emacs-w3m"]
 	path = vendor/emacs-w3m
 	url = https://github.com/sjatkinson/emacs-w3m.git
+[submodule "vendor/twittering-mode"]
+	path = vendor/twittering-mode
+	url = git://github.com/hayamiz/twittering-mode.git

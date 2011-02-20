@@ -40,3 +40,6 @@
 [submodule "vendor/gnus"]
 	path = vendor/gnus
 	url = http://git.gnus.org/gnus.git
+[submodule "vendor/org-mode"]
+	path = vendor/org-mode
+	url = git://orgmode.org/org-mode.git

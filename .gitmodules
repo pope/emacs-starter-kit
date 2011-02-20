@@ -43,3 +43,6 @@
 [submodule "vendor/org-mode"]
 	path = vendor/org-mode
 	url = git://orgmode.org/org-mode.git
+[submodule "vendor/nxhtml"]
+	path = vendor/nxhtml
+	url = https://github.com/emacsmirror/nxhtml.git

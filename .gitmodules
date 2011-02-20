@@ -31,3 +31,6 @@
 [submodule "vendor/eproject"]
 	path = vendor/eproject
 	url = git://github.com/jrockway/eproject.git
+[submodule "vendor/emacs-w3m"]
+	path = vendor/emacs-w3m
+	url = https://github.com/sjatkinson/emacs-w3m.git

@@ -1,4 +1,4 @@
-(defvar *emacs-load-start* (current-time))
+(defvar *emacs-load-start* (float-time))
 
 (setq ns-pop-up-frames nil
       ring-bell-function 'ignore
@@ -8,7 +8,8 @@
       nxml-child-indent 4
       tab-width 4
       scroll-step 1
-      mumamo-background-colors nil)
+      mumamo-background-colors nil
+      twittering-use-master-password t)
 (line-number-mode t)
 (column-number-mode t)
 (winner-mode t)
@@ -36,11 +37,16 @@
 
 (add-to-list 'load-path vendor-dir)
 
-(loop for ext in '("textmate" "color-theme" "cheat" "geben" "auto-complete"
-                   "rudel" "html5" "mingus" "vc-p4" "apel" "jabber" "eproject"
-                   "ecb" "color-theme-ir-black" "color-theme-github"
-                   "color-theme-mac-classic" "color-theme-tangotango")
-      do (add-to-list 'load-path (concat vendor-dir ext)))
+(dolist (ext '("textmate" "color-theme" "cheat" "geben" "auto-complete"
+               "rudel" "html5" "mingus" "vc-p4" "apel" "jabber" "eproject"
+               "ecb" "color-theme-ir-black" "color-theme-github"
+               "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
+               "twittering-mode" "gnus/lisp" "org-mode/lisp"))
+  (add-to-list 'load-path (concat vendor-dir ext)))
+
+(require 'gnus-load)
+(require 'w3m-load)
+(require 'org-install)
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories (concat vendor-dir "auto-complete/dict"))
@@ -49,12 +55,15 @@
 
 (require 'textmate)
 (require 'peepopen)
-(autoload 'sr-speedbar "sr-speedbar" "Same frame speedbar" t)
-(autoload 'quack-load "quack-load" "Initialize Quack" t)
 (require 'vc-p4)
 (require 'eproject)
 (require 'eproject-extras)
+(require 'eproject-load)
 (require 'ecb-autoloads)
+(require 'twittering-mode)
+
+(autoload 'sr-speedbar "sr-speedbar" "Same frame speedbar" t)
+(autoload 'quack-load "quack-load" "Initialize Quack" t)
 (autoload 'turn-on-zf "zf" "Turn on zf-mode" t)
 (autoload 'zf-mode "zf" "A minor mode for when you're working with a ZendFramework project." t)
 (autoload 'sync-mode "sync-mode" "A minor mode to sync a buffer from one directory to another" t)
@@ -136,16 +145,16 @@
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-    (filename (buffer-file-name)))
+        (filename (buffer-file-name)))
     (if (not filename)
-    (message "Buffer '%s' is not visiting a file!" name)
+        (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
-      (message "A buffer named '%s' already exists!" new-name)
-    (progn
-      (rename-file name new-name 1)
-      (rename-buffer new-name)
-      (set-visited-file-name new-name)
-      (set-buffer-modified-p nil))))))
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 
 (defun eshell/clear ()
   "04Dec2001 - sailor, to clear the eshell buffer."
@@ -172,7 +181,4 @@
 (global-set-key [f11] 'toggle-fullscreen)
 (global-set-key (kbd "s-F") 'toggle-fullscreen)
 
-(message "My .emacs loaded in %ds" (destructuring-bind (hi lo ms)
-                                       (current-time)
-                                     (- (+ hi lo) (+ (first *emacs-load-start*)
-                                                     (second *emacs-load-start*)))))
+(message "My .emacs loaded in %.1fs" (- (float-time) *emacs-load-start*))

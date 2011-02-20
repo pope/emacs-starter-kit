@@ -37,3 +37,6 @@
 [submodule "vendor/twittering-mode"]
 	path = vendor/twittering-mode
 	url = git://github.com/hayamiz/twittering-mode.git
+[submodule "vendor/gnus"]
+	path = vendor/gnus
+	url = http://git.gnus.org/gnus.git

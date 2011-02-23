@@ -49,3 +49,6 @@
 [submodule "vendor/naquadah-theme"]
 	path = vendor/naquadah-theme
 	url = git://git.naquadah.org/naquadah-theme.git
+[submodule "vendor/rainbow"]
+	path = vendor/rainbow
+	url = git://git.naquadah.org/rainbow.git

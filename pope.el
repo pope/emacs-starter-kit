@@ -9,7 +9,8 @@
       tab-width 4
       scroll-step 1
       mumamo-background-colors nil
-      twittering-use-master-password t)
+      twittering-use-master-password t
+      generated-autoload-file autoload-file)
 (line-number-mode t)
 (column-number-mode t)
 (winner-mode t)
@@ -41,7 +42,8 @@
                "rudel" "html5" "mingus" "vc-p4" "apel" "jabber" "eproject"
                "ecb" "color-theme-ir-black" "color-theme-github"
                "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
-               "twittering-mode" "gnus/lisp" "org-mode/lisp"))
+               "twittering-mode" "gnus/lisp" "org-mode/lisp" "naquadah-theme"
+               "rainbow"))
   (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'gnus-load)
@@ -180,5 +182,6 @@
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 (global-set-key [f11] 'toggle-fullscreen)
 (global-set-key (kbd "s-F") 'toggle-fullscreen)
+
 
 (message "My .emacs loaded in %.1fs" (- (float-time) *emacs-load-start*))

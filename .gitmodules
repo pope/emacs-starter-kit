@@ -55,3 +55,6 @@
 [submodule "vendor/google-weather-el"]
 	path = vendor/google-weather-el
 	url = git://git.naquadah.org/google-weather-el.git
+[submodule "vendor/google-maps"]
+	path = vendor/google-maps
+	url = git://git.naquadah.org/google-maps.git

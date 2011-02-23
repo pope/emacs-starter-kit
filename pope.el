@@ -43,7 +43,7 @@
                "ecb" "color-theme-ir-black" "color-theme-github"
                "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
                "twittering-mode" "gnus/lisp" "org-mode/lisp" "naquadah-theme"
-               "rainbow" "google-weather-el"))
+               "rainbow" "google-weather-el" "google-maps"))
   (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'gnus-load)

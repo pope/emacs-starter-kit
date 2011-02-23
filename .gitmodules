@@ -52,3 +52,6 @@
 [submodule "vendor/rainbow"]
 	path = vendor/rainbow
 	url = git://git.naquadah.org/rainbow.git
+[submodule "vendor/google-weather-el"]
+	path = vendor/google-weather-el
+	url = git://git.naquadah.org/google-weather-el.git

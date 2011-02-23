@@ -43,7 +43,7 @@
                "ecb" "color-theme-ir-black" "color-theme-github"
                "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
                "twittering-mode" "gnus/lisp" "org-mode/lisp" "naquadah-theme"
-               "rainbow"))
+               "rainbow" "google-weather-el"))
   (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'gnus-load)
@@ -137,6 +137,10 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Org Mode
+(eval-after-load "org"
+  '(progn
+    (require 'org-google-weather)))
 
 (menu-bar-mode t)
 ;;(tool-bar-mode t)

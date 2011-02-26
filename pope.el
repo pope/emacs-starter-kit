@@ -43,7 +43,7 @@
                "ecb" "color-theme-ir-black" "color-theme-github"
                "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
                "twittering-mode" "gnus/lisp" "org-mode/lisp" "naquadah-theme"
-               "rainbow" "google-weather-el" "google-maps"))
+               "rainbow" "google-weather-el" "google-maps" "offlineimap-el"))
   (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'gnus-load)
@@ -69,6 +69,7 @@
 (autoload 'turn-on-zf "zf" "Turn on zf-mode" t)
 (autoload 'zf-mode "zf" "A minor mode for when you're working with a ZendFramework project." t)
 (autoload 'sync-mode "sync-mode" "A minor mode to sync a buffer from one directory to another" t)
+(autoload 'offlineimap "offlineimap" "Start OfflineIMAP." t)
 
 (load (concat vendor-dir "nxhtml/autostart.el"))
 

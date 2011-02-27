@@ -43,7 +43,7 @@
                "ecb" "color-theme-ir-black" "color-theme-github"
                "color-theme-mac-classic" "color-theme-tangotango" "emacs-w3m"
                "twittering-mode" "gnus/lisp" "org-mode/lisp" "naquadah-theme"
-               "rainbow" "google-weather-el" "google-maps" "offlineimap-el"))
+               "rainbow" "google-maps" "offlineimap-el"))
   (add-to-list 'load-path (concat vendor-dir ext)))
 
 (require 'gnus-load)
@@ -140,7 +140,10 @@
 ;; Org Mode
 (eval-after-load "org"
   '(progn
-    (require 'org-google-weather)))
+     (add-to-list 'load-path (concat vendor-dir "google-weather-el"))
+     (require 'org-google-weather)
+     (add-to-list 'load-path (concat vendor-dir "org-contacts"))
+     (require 'org-contacts)))
 
 (menu-bar-mode t)
 ;;(tool-bar-mode t)
@@ -186,6 +189,7 @@
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 (global-set-key [f11] 'toggle-fullscreen)
 (global-set-key (kbd "s-F") 'toggle-fullscreen)
+(define-key global-map "\C-cc" 'org-capture)
 
 
 (message "My .emacs loaded in %.1fs" (- (float-time) *emacs-load-start*))

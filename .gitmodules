@@ -61,3 +61,6 @@
 [submodule "vendor/offlineimap-el"]
 	path = vendor/offlineimap-el
 	url = git://git.naquadah.org/offlineimap-el.git
+[submodule "vendor/org-contacts"]
+	path = vendor/org-contacts
+	url = git://git.naquadah.org/org-contacts.git

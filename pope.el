@@ -60,7 +60,6 @@
 (require 'vc-p4)
 (require 'eproject)
 (require 'eproject-extras)
-(require 'eproject-load)
 (require 'ecb-autoloads)
 (require 'twittering-mode)
 

@@ -1,29 +1,38 @@
 ;; My Setup for Tabbar.  This is in an autoload file because Aquamacs
 ;; doesn't use this
 
+(eval-when-compile (require 'eproject))
+
 (defun pope-setup-tabbar ()
   (require 'tabbar)
-  (set-face-attribute
-   'tabbar-default-face nil
-   :background "gray60")
-  (set-face-attribute
-   'tabbar-unselected-face nil
-   :background "gray85"
-   :foreground "gray30"
-   :box nil)
-  (set-face-attribute
-   'tabbar-selected-face nil
-   :background "#f2f2f6"
-   :foreground "black"
-   :box nil)
-  (set-face-attribute
-   'tabbar-button-face nil
-   :box '(:line-width 1 :color "gray72" :style released-button))
-  (set-face-attribute
-   'tabbar-separator-face nil
-   :height 0.7)
-
+  (set-face-attribute 'tabbar-default-face nil
+                      :background "gray80"
+                      :foreground "black"
+                      :height 0.8)
+  (set-face-attribute 'tabbar-selected-face nil
+                      :foreground "black"
+                      :background "grey95"
+                      :box '(:line-width 4 :color "grey95"))
+  (set-face-attribute 'tabbar-separator-face nil
+                      :background "grey50"
+                      :foreground "black"
+                      :height 0.2)
+  (set-face-attribute 'tabbar-unselected-face nil
+                      :foreground "black"
+                      :box '(:line-width 4 :color "grey80"))
+  (set-face-attribute 'tabbar-button-face nil
+                      :foreground "grey35"
+                      :box '(:line-width 2 :color "grey80")
+                      :height 1.2)
+  (setq tabbar-separator '(" "))
+  (tabbar-setup-button 'tabbar-home-button
+                       (cons (cons "⏏" nil) (cons "⌂" nil)))
+  (tabbar-setup-button 'tabbar-scroll-left-button
+                       (cons (cons " ◀" nil) (cons " ◁" nil)))
+  (tabbar-setup-button 'tabbar-scroll-right-button
+                       (cons (cons " ▶ " nil) (cons " ▷ " nil)))
   (setq tabbar-buffer-groups-function 'pope-tabbar-buffer-groups)
+
   (tabbar-mode 1)
 
   (global-set-key (kbd "s-{") 'tabbar-backward)
